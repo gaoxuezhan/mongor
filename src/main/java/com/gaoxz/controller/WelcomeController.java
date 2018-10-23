@@ -10,7 +10,7 @@ import java.util.Map;
 public class WelcomeController {
 
 	// inject via application.properties
-	@Value("${welcome.message:test}")
+	@Value("${welcome.message:Person}")
 	private String message = "Hello World";
 
 	@RequestMapping("/")
