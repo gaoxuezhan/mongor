@@ -2,21 +2,22 @@ package com.gaoxz.dao.impl;
 
 import com.gaoxz.dao.ProductsDao;
 import com.gaoxz.domain.Products;
+import com.gaoxz.domain.ProductsEx;
 import com.mongodb.BasicDBObject;
 import com.mongodb.CommandResult;
 import com.mongodb.DBObject;
 import com.mongodb.client.result.UpdateResult;
+import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by summer on 2017/5/5.
@@ -86,15 +87,34 @@ public class ProductsDaoImpl implements ProductsDao {
     }
 
     @Override
-    public List<Products> findDetailByCode(String code){
-        List<Products> people=  mongoTemplate.findAll(Products.class);
+    public ProductsEx findDetailByCode(String code){
+
+        Query query=new Query(Criteria.where("code").is(code));
+        Sort.Direction direction=false?Sort.Direction.ASC:Sort.Direction.DESC;
+        query.with(new Sort(direction,"updateTime"));
+        List<Products> people=  mongoTemplate.find(query, Products.class);
+
+        ProductsEx result = new ProductsEx();
+        Map<String, String> detail = new LinkedHashMap<String, String>();
+        result.setDetail(detail);
+
+        for (Products p:
+             people) {
+            if(StringUtils.isEmpty(result.getTarget())){
+                result.setTarget(p);
+            }
+
+            detail.put(p.getUpdateTime(), p.getPrice());
+
+        }
+
 //        Query query=new Query(Criteria.where("name").is(name));
 //        List<String> result = mongoTemplate.getCollection("asdf").distinct("updateTime");
 
 //        CommandResult result = mongoTemplate.executeCommand("");
 //        CommandResult result = mongoTemplate.executeCommand("{distinct:'tuser', key:'sex'}");
 
-        return people;
+        return result;
     }
 
     /**

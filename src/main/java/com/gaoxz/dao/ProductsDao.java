@@ -1,6 +1,7 @@
 package com.gaoxz.dao;
 
 import com.gaoxz.domain.Products;
+import com.gaoxz.domain.ProductsEx;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public interface ProductsDao {
 
     public List<Products> findNewAll() ;
 
-    public List<Products> findDetailByCode(String code) ;
+    public ProductsEx findDetailByCode(String code) ;
 
 }

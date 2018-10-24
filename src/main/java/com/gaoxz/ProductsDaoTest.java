@@ -2,6 +2,7 @@ package com.gaoxz;
 
 import com.gaoxz.dao.ProductsDao;
 import com.gaoxz.domain.Products;
+import com.gaoxz.domain.ProductsEx;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,20 @@ public class ProductsDaoTest {
 //    }
 
     @Test
-    public void findProductsByProductsName(){
+    public void findProductsAll(){
 
         List<Products> products= productsDao.findNewAll();
         for (Products p:products
              ) {
             System.out.println(p.getCode() + "_" + p.getPrice() + "_" + p.getUpdateTime());
         }
+    }
+
+    @Test
+    public void findProductsByProductsName(){
+
+        ProductsEx products= productsDao.findDetailByCode("ZH9112");
+        System.out.println(products.getDetail().toString());
     }
 
 //    @Test
