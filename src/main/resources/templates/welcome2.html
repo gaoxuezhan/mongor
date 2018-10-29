@@ -34,7 +34,7 @@
 	<div class="container">
 
 		<div class="starter-template">
-			<h1>Spring Boot Web Thymeleaf Example 2</h1>
+			<h1>Spring Boot Web Thymeleaf Example 5</h1>
 			<h2>
 				<span th:text="'Message: ' + ${message}"></span>
 			</h2>
@@ -44,7 +44,7 @@
 	<!-- /.container -->
 
 	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-	<div id="main" style="width: 2600px;height:400px;"></div>
+	<div id="main" style="width: 80%;height:200px;"></div>
 
 
 	<script th:inline="javascript">
@@ -56,7 +56,7 @@
         $(document).ready(function(){
             /**  -------------首页地图初始化 start----- */
             $.ajax({
-                url : "/rest2",
+                url : "/rest3",
                 type : "GET",
                 dataType : "JSON",
                 data: {},

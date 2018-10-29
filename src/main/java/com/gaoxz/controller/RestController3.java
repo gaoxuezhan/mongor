@@ -1,7 +1,7 @@
 package com.gaoxz.controller;
 
-import com.gaoxz.dao.ProductsDao;
-import com.gaoxz.domain.ProductsEx;
+import com.gaoxz.dao.FlightDao;
+import com.gaoxz.domain.FlightEx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,38 +13,34 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class RestController2 {
+public class RestController3 {
 
 	// inject via application.properties
 	@Value("${welcome.message:Person}")
 	private String message = "Hello World";
 
 	@Autowired
-	private ProductsDao productsDao;
+	private FlightDao flightsDao;
 
 
-	@RequestMapping("/rest2")
+	@RequestMapping("/rest3")
 	public List welcome(Map<String, Object> model) {
 
-		ProductsEx products= productsDao.findDetailByCode("HU7703");
+		FlightEx flights= flightsDao.getTheHistoryDataOfTheFlightInTargetDate("2018-12-29", "MU5391");
 
 		List<String> keyList = new ArrayList<String>();
-		keyList.addAll(products.getDetail().keySet());
+		keyList.addAll(flights.getDetail().keySet());
 
 		List result = new ArrayList();
         for (String key:keyList
              ) {
-
-//            if(Integer.valueOf(products.getDetail().get(key)) > 1500){
-//                continue;
-//            }
 
             Map one = new HashMap();
             one.put("name", "x");
 
             List b = new ArrayList();
             b.add(key);
-            b.add(products.getDetail().get(key));
+            b.add(flights.getDetail().get(key));
 
             one.put("value", b);
 
